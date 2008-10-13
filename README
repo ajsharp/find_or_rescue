@@ -1,0 +1,23 @@
+FindOrRescue
+============
+
+This is a very simple plugin that mixes a method into ActiveRecord::Base called find_or_rescue.
+
+The find_or_rescue method calls the find method. If the model is found, then it is returned. If it is not found, then we rescue the ActiveRecord::RecordNotFound error and return false.
+
+I've found this most useful when adding associated models, based on user input. 
+
+
+Example
+=======
+
+class CartItem < ActiveRecord::Base
+	belongs_to :product
+	
+	def add_product(product_id_from_params_hash)
+		self.product_id = product_id_from_params_hash if Product.find_or_rescue(product_id_from_params_hash)
+	end
+end
+
+
+Copyright (c) 2008 Alex Sharp, released under the MIT license
